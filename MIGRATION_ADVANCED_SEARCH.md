@@ -44,7 +44,8 @@ See https://github.blog/changelog/2025-10-06-github-issues-projects-api-support-
 ### Phase 3: Testing
 - [x] Create unit tests for the search functionality with advanced_search parameter (existing tests cover this)
 - [x] Run existing unit tests to ensure no regressions (all 22 tests passing)
-- [ ] Manually test various query types:
+- [x] Create comprehensive manual test checklist (MANUAL_TEST_CHECKLIST.md)
+- [ ] Manually test various query types (see MANUAL_TEST_CHECKLIST.md):
   - [ ] Simple queries (e.g., `repo:owner/name is:issue`)
   - [ ] Complex queries with OR operators
   - [ ] Queries with variables
@@ -60,9 +61,10 @@ See https://github.blog/changelog/2025-10-06-github-issues-projects-api-support-
 - [ ] Verify no new deprecation warnings (requires manual testing with actual GitHub API)
 
 ### Phase 5: Documentation
-- [ ] Update README if necessary
-- [ ] Add comments explaining the advanced_search parameter
-- [ ] Document any behavior changes (if any)
+- [x] Update migration plan document with progress
+- [x] Add comments explaining the advanced_search parameter
+- [x] Create manual test checklist for comprehensive validation
+- [ ] Update README if necessary (not required - no user-facing changes)
 
 ## Technical Details
 
@@ -95,7 +97,47 @@ const response = await octokit.rest.search.issuesAndPullRequests({
 
 **Note**: The `advanced_search` parameter is a string type (`"true"`), not a boolean, as defined in the GitHub OpenAPI specification.
 
-## Key Considerations
+## Implementation Summary
+
+### Code Changes Made
+
+1. **File**: `src/extension/notebookProvider.ts` (Line 122)
+   - Added `advanced_search: "true"` parameter to `octokit.rest.search.issuesAndPullRequests()` call
+   - Added inline comment explaining the purpose
+   
+### Validation Results
+
+✅ **All Automated Tests Pass**
+- 22 unit tests passing
+- TypeScript compilation successful
+- ESLint checks passing
+- Extension builds without errors
+
+✅ **Code Quality**
+- Minimal change (single parameter addition)
+- Follows existing code style
+- Type-safe implementation using Octokit types
+
+⚠️ **Manual Testing Required**
+- Comprehensive manual test checklist created: `MANUAL_TEST_CHECKLIST.md`
+- Testing requires live GitHub API access
+- Should verify no deprecation warnings appear in production
+
+### Files Added/Modified
+
+1. **MIGRATION_ADVANCED_SEARCH.md** (Created)
+   - Comprehensive migration plan
+   - Technical details and considerations
+   - Progress tracking
+
+2. **MANUAL_TEST_CHECKLIST.md** (Created)
+   - 10 categories of test cases
+   - 25+ specific test scenarios
+   - Sign-off section for validation
+
+3. **src/extension/notebookProvider.ts** (Modified)
+   - Single line added: `advanced_search: "true"`
+   - Inline documentation added
 
 ### Advanced Search Syntax Changes
 
