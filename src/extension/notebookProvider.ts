@@ -119,6 +119,7 @@ export class IssuesNotebookKernel {
 						order: queryData.order,
 						per_page: 100,
 						page,
+						advanced_search: "true", // Use advanced search API to avoid deprecation
 						request: { signal: abortCtl.signal }
 					});
 					count += response.data.items.length;
